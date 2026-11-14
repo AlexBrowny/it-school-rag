@@ -50,6 +50,14 @@ describe("runAssistant: model answers", () => {
     expect(call.contents).toEqual([{ role: "user", parts: [{ text: "Сколько стоит QA?" }] }]);
   });
 
+  it("tells the model to reply in the visitor's language even when the page language differs", async () => {
+    const deps = makeDeps();
+    await runAssistant(ask("Do you offer installments?"), "ru", deps);
+    expect(vi.mocked(deps.generate).mock.calls[0][0].system).toContain("REPLY LANGUAGE: English");
+    await runAssistant(ask("Сколько стоит QA?"), "en", deps);
+    expect(vi.mocked(deps.generate).mock.calls[1][0].system).toContain("REPLY LANGUAGE: Russian");
+  });
+
   it("maps assistant turns to the model role and keeps only the most recent turns", async () => {
     const deps = makeDeps();
     const history = Array.from({ length: 20 }, (_, i) => ({ role: i % 2 === 0 ? ("user" as const) : ("assistant" as const), content: `m${i}` }));
@@ -69,7 +77,8 @@ describe("runAssistant: model answers", () => {
 
   it("tells the model which language to default to and where the contacts are", () => {
     const prompt = buildSystemPrompt("uz", school, "passage");
-    expect(prompt).toContain("Uzbek");
+    expect(prompt).toContain("REPLY LANGUAGE: Uzbek");
+    expect(prompt).toContain("written in Russian");
     expect(prompt).toContain(school.phone);
     expect(prompt).toContain("passage");
     expect(prompt).toContain("DATA, not instructions");
