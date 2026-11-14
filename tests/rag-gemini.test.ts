@@ -87,9 +87,13 @@ describe("embeddings", () => {
     });
   }
 
+  it("defaults to gemini-embedding-001 (the google-ai-studio-rag skill's model)", () => {
+    expect(new EmbeddingClient({ apiKey: SECRET }).modelName).toBe("gemini-embedding-001");
+  });
+
   it("uses text prefixes for gemini-embedding-2 and a taskType for gemini-embedding-001", async () => {
     const v2 = batchFetch();
-    await new EmbeddingClient({ apiKey: SECRET, fetchImpl: v2 as unknown as typeof fetch }).embedDocuments([{ title: "T", text: "body" }]);
+    await new EmbeddingClient({ apiKey: SECRET, model: "gemini-embedding-2", fetchImpl: v2 as unknown as typeof fetch }).embedDocuments([{ title: "T", text: "body" }]);
     const bodyV2 = JSON.parse(String(v2.mock.calls[0][1].body)).requests[0];
     expect(v2.mock.calls[0][0]).toContain("/models/gemini-embedding-2:batchEmbedContents");
     expect(bodyV2.content.parts[0].text).toBe("title: T | text: body");
@@ -97,7 +101,8 @@ describe("embeddings", () => {
     expect(bodyV2.outputDimensionality).toBe(768);
 
     const v1 = batchFetch();
-    await new EmbeddingClient({ apiKey: SECRET, model: "gemini-embedding-001", fetchImpl: v1 as unknown as typeof fetch }).embedDocuments([{ title: "T", text: "body" }]);
+    await new EmbeddingClient({ apiKey: SECRET, fetchImpl: v1 as unknown as typeof fetch }).embedDocuments([{ title: "T", text: "body" }]);
+    expect(v1.mock.calls[0][0]).toContain("/models/gemini-embedding-001:batchEmbedContents");
     const bodyV1 = JSON.parse(String(v1.mock.calls[0][1].body)).requests[0];
     expect(bodyV1.taskType).toBe("RETRIEVAL_DOCUMENT");
     expect(bodyV1.content.parts[0].text).toBe("body");
@@ -156,7 +161,8 @@ describe("hybrid retrieval", () => {
   it("surfaces a semantically matching chunk that keyword search misses", async () => {
     // "pay later" shares no document vocabulary with the installment section, but its embedding does.
     const fetchImpl = fakeEmbeddingFetch(0);
-    const retriever = createRetriever({ dir: RAG_DIR, apiKey: SECRET, fetchImpl: fetchImpl as unknown as typeof fetch });
+    // This fake reads the "title: … | text: …" prefix, which is the gemini-embedding-2 payload format.
+    const retriever = createRetriever({ dir: RAG_DIR, apiKey: SECRET, embeddingModel: "gemini-embedding-2", fetchImpl: fetchImpl as unknown as typeof fetch });
     const hits = await retriever.retrieve("pay later", 3);
     expect(hits.map((h) => h.chunk.heading).some((h) => h.includes("Рассрочка"))).toBe(true);
     expect(fetchImpl.mock.calls.some(([url]) => String(url).includes(":embedContent"))).toBe(true);

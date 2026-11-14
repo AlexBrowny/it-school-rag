@@ -261,6 +261,15 @@ describe("helpers", () => {
     expect(detectLanguage("Kurs narxi qancha?", "ru")).toBe("uz");
     expect(detectLanguage("O‘qish qancha davom etadi", "ru")).toBe("uz");
     expect(detectLanguage("12345", "uz")).toBe("uz");
+    // short Uzbek phrases without the "classic" words used to be misread as English
+    expect(detectLanguage("Sinov darsi bepulmi?", "ru")).toBe("uz");
+    expect(detectLanguage("Ish vaqtingiz qanday?", "en")).toBe("uz");
+    expect(detectLanguage("Frontend kursiga qanday yozilaman", "ru")).toBe("uz");
+    expect(detectLanguage("Where is your school and how do I get there?", "uz")).toBe("en");
+    expect(detectLanguage("Is the trial lesson free?", "ru")).toBe("en");
+    // a lone word has no signal: keep the page language when it is Latin-script
+    expect(detectLanguage("price", "uz")).toBe("uz");
+    expect(detectLanguage("price", "ru")).toBe("en");
   });
 
   it("borrows the previous question for short follow-ups", () => {

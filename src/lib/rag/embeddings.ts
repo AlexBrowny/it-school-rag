@@ -8,9 +8,10 @@ import path from "node:path";
  * (re-embedded only when their text or the model changes). Vectors are L2-normalised so cosine
  * similarity is a plain dot product.
  */
-export const DEFAULT_EMBEDDING_MODEL = "gemini-embedding-2";
+export const DEFAULT_EMBEDDING_MODEL = "gemini-embedding-001";
 const API_ROOT = "https://generativelanguage.googleapis.com/v1beta";
-const OUTPUT_DIMENSIONS = 768;
+export const EMBEDDING_DIMENSIONS = 768;
+const OUTPUT_DIMENSIONS = EMBEDDING_DIMENSIONS;
 const BATCH_SIZE = 50;
 const TIMEOUT_MS = 30_000;
 
@@ -64,6 +65,11 @@ export class EmbeddingClient {
   private readonly model: string;
   private readonly doFetch: typeof fetch;
   private cache: CacheFile | null = null;
+
+  /** Model id this client embeds with. */
+  get modelName(): string {
+    return this.model;
+  }
 
   constructor(private readonly options: EmbeddingClientOptions) {
     this.model = options.model ?? DEFAULT_EMBEDDING_MODEL;

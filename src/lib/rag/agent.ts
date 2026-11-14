@@ -208,13 +208,26 @@ const FALLBACK_TEXT: Record<Locale, { found: string; none: string; contact: stri
   },
 };
 
-const UZBEK_HINTS = /\b(qancha|narx\w*|kurs\w*|yozil\w*|manzil\w*|jadval\w*|vaqti|salom|rahmat|qanday|nima|bormi|mumkin|to['‘’]?lov|bo['‘’]?lib|ish)\b|[og]['‘’]/i;
+const APOSTROPHE = "['‘’ʻʼ`]";
+const UZBEK_CLUES = new RegExp(
+  String.raw`\b(qancha|narx\w*|kurs\w*|yozil\w*|manzil\w*|jadval\w*|vaqt\w*|salom|rahmat|qanday|nima\w*|bormi|mumkin|sinov\w*|dars\w*|bepul\w*|kerak|qayer\w*|qachon|ishla\w*|haqida|iltimos|ustoz\w*|o${APOSTROPHE}qi\w*|to${APOSTROPHE}?lov\w*|bo${APOSTROPHE}?lib\w*|mi|emas|bilan|uchun|menga|bizga|ha|yo${APOSTROPHE}q)\b|\b[og]${APOSTROPHE}\w`,
+  "gi",
+);
+const ENGLISH_CLUES =
+  /\b(the|is|are|do|does|you|your|how|what|which|where|when|can|could|i|we|my|me|please|want|need|have|has|would|will|much|many|any|about|with|for|of|and|to|there|this|that|it)\b/gi;
 
-/** Picks the language of the visitor's last message (Cyrillic → ru, Uzbek-looking Latin → uz, other Latin → en). */
+/**
+ * Picks the language of the visitor's last message: Cyrillic → ru; Latin text goes to whichever of
+ * Uzbek / English has more tell-tale words. Ties (e.g. a lone "price") keep the page language when it
+ * is Latin-script, otherwise English.
+ */
 export function detectLanguage(text: string, fallback: Locale): Locale {
   if (/[а-яё]/i.test(text)) return "ru";
   if (!/[a-z]/i.test(text)) return fallback;
-  return UZBEK_HINTS.test(text) ? "uz" : "en";
+  const uzbek = text.match(UZBEK_CLUES)?.length ?? 0;
+  const english = text.match(ENGLISH_CLUES)?.length ?? 0;
+  if (uzbek !== english) return uzbek > english ? "uz" : "en";
+  return fallback === "uz" ? "uz" : "en";
 }
 
 function fallbackReply(hits: Retrieved[], locale: Locale, school: AssistantDeps["school"]): string {
