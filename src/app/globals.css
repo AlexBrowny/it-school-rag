@@ -1,26 +1,270 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens — Apple HIG principles (see .claude/skills/apple-design):
+ *  - semantic colours with roles, light + dark variants (color.md, dark-mode.md)
+ *  - 17px base text, no light weights for small text (typography.md)
+ *  - glass only on the floating functional layer: navbar, language switcher, planet card (liquid-glass.md)
+ *  - >=44px targets, AA contrast, reduced motion / transparency / contrast respected (accessibility.md)
+ *
+ * Contrast (WCAG ratios computed from the hex values, AA needs 4.5:1 for text < 18pt):
+ *   light  content #1d1d1f on #fbfbfd 16.3 · content-2 #6e6e73 on #fbfbfd 4.9 / on #f5f5f7 4.7 / on white 5.1
+ *          accent-text #0066cc on #fbfbfd 5.4 · white on accent #0071e3 4.7 · white on hover #0062c4 5.9
+ *   dark   content #f5f5f7 on #000 19.3 · content-2 #a1a1a6 on #000 8.2 / on #1c1c1e 6.6
+ *          accent-text #2997ff on #000 7.0 / on #1c1c1e 5.6 · danger #ff6b6b on #1c1c1e 6.1 · success #30d158 on #1c1c1e 8.4
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --surface: #fbfbfd;
+  --surface-2: #f5f5f7;
+  --card: #ffffff;
+  --content: #1d1d1f;
+  --content-2: #6e6e73;
+  --accent: #0071e3; /* white on accent 4.70:1 */
+  --accent-hover: #0062c4; /* white on hover 5.93:1 */
+  --accent-text: #0066cc;
+  --danger: #d70015; /* on white 5.38:1 */
+  --success: #1d7a34; /* on white 5.40:1 */
+  --signal: #8e5cf6;
+  --line: rgb(0 0 0 / 0.1);
+  --glass-bg: rgb(251 251 253 / 0.72);
+  --glass-border: rgb(0 0 0 / 0.08);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 30px rgb(0 0 0 / 0.06);
+  --shadow-lift: 0 2px 6px rgb(0 0 0 / 0.06), 0 18px 50px rgb(0 0 0 / 0.12);
+  --radius-card: 24px;
+  --ease-apple: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --surface: #000000;
+    --surface-2: #0d0d0f;
+    --card: #1c1c1e;
+    --content: #f5f5f7;
+    --content-2: #a1a1a6;
+    --accent-text: #2997ff;
+    --danger: #ff6b6b; /* on #1c1c1e 6.13:1 */
+    --success: #30d158; /* on #1c1c1e 8.42:1 */
+    --signal: #a78bfa;
+    --line: rgb(255 255 255 / 0.12);
+    --glass-bg: rgb(28 28 30 / 0.66);
+    --glass-border: rgb(255 255 255 / 0.12);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 30px rgb(0 0 0 / 0.4);
+    --shadow-lift: 0 2px 6px rgb(0 0 0 / 0.5), 0 18px 50px rgb(0 0 0 / 0.55);
   }
 }
 
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-card: var(--card);
+  --color-content: var(--content);
+  --color-content-2: var(--content-2);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-signal: var(--signal);
+  --color-line: var(--line);
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --radius-card: var(--radius-card);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--surface);
+  color: var(--content);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.012em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  @media (min-width: 768px) {
+    .container-x { padding-inline: 32px; }
+  }
+
+  .section { padding-block: clamp(72px, 12vw, 140px); }
+
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--accent-text);
+  }
+
+  .section-title {
+    font-size: clamp(34px, 5.4vw, 60px);
+    font-weight: 700;
+    margin-top: 12px;
+  }
+
+  .section-lead {
+    margin-top: 18px;
+    max-width: 640px;
+    font-size: clamp(18px, 2vw, 21px);
+    line-height: 1.4;
+    color: var(--content-2);
+  }
+
+  /* Content layer: opaque surface, never glass. */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Functional layer only: navbar, language switcher, planet info card. */
+  .glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid var(--glass-border);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 26px;
+    white-space: nowrap;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: background-color 0.25s var(--ease-apple), transform 0.25s var(--ease-apple),
+      box-shadow 0.25s var(--ease-apple), opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--accent-text);
+    box-shadow: inset 0 0 0 1.5px currentColor;
+  }
+  .btn-secondary:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+  .btn-quiet { background: var(--surface-2); color: var(--content); }
+  .btn-quiet:hover:not(:disabled) { background: color-mix(in srgb, var(--content) 10%, var(--surface-2)); }
+
+  .field {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: var(--surface-2);
+    color: var(--content);
+    border: 1.5px solid transparent;
+    font: inherit;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  .field::placeholder { color: var(--content-2); opacity: 0.85; }
+  .field:hover { border-color: var(--line); }
+  .field:focus { outline: none; border-color: var(--accent); background: var(--card); }
+  .field[aria-invalid="true"] { border-color: var(--danger); }
+  textarea.field { min-height: 120px; resize: vertical; }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    background: var(--surface-2);
+    color: var(--content);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .chip:hover { background: color-mix(in srgb, var(--content) 10%, var(--surface-2)); }
+  .chip[aria-pressed="true"], .chip[aria-selected="true"] { background: var(--content); color: var(--surface); }
+}
+
+/* Reduce Transparency / Increase Contrast: opaque fallbacks for glass. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .glass {
+    background: var(--card);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-color: var(--content-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Always-dark scope (hero, footer, navbar over hero). Same roles, dark values. */
+.scope-dark {
+  --surface: #000000;
+  --surface-2: #1c1c1e;
+  --card: #1c1c1e;
+  --content: #f5f5f7;
+  --content-2: #a1a1a6;
+  --accent-text: #2997ff;
+  --danger: #ff6b6b;
+  --success: #30d158;
+  --signal: #a78bfa;
+  --line: rgb(255 255 255 / 0.14);
+  --glass-bg: rgb(22 22 24 / 0.62);
+  --glass-border: rgb(255 255 255 / 0.14);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 30px rgb(0 0 0 / 0.4);
+  color: var(--content);
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }

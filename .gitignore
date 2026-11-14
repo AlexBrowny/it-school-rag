@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local sqlite data
+/data/
+
+# keep the config template tracked (real .env files stay ignored)
+!.env.example
+
+# apple-design skill is a separate git clone (reinstall: git clone https://github.com/dickwu/apple-design-skill.git .claude/skills/apple-design)
+/.claude/skills/apple-design/

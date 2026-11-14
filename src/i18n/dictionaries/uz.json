@@ -1,0 +1,236 @@
+{
+  "meta": {
+    "title": "Orbit IT School — IT kasblarini onlayn va oflayn o‘rgatish",
+    "description": "IT kasblar maktabi: Frontend, Backend, Mobile, UI/UX, Data, AI, QA, DevOps va boshqalar. Amaliyot, murabbiylar va ishga joylashishda yordam."
+  },
+  "nav": {
+    "about": "Maktab haqida",
+    "courses": "Kurslar",
+    "projects": "Loyihalar",
+    "reviews": "Fikrlar",
+    "contacts": "Aloqa",
+    "enroll": "Yozilish",
+    "openMenu": "Menyuni ochish",
+    "closeMenu": "Menyuni yopish",
+    "language": "Sayt tili",
+    "skip": "Mazmunga o‘tish"
+  },
+  "hero": {
+    "eyebrow": "Yangi avlod IT maktabi",
+    "title": "Kasbni tanlang.",
+    "titleAccent": "Biz sizni orbitaga chiqaramiz.",
+    "subtitle": "12 ta yo‘nalish, jonli amaliyot va soha murabbiylari. Noldan boshlang va birinchi taklifgacha yeting.",
+    "ctaPrimary": "Kursni tanlash",
+    "ctaSecondary": "Bepul maslahat",
+    "hint": "Sayyorani suring yoki orbitadagi kasbni tanlang",
+    "planetLabel": "Interaktiv sayyora: IT kasblari orbitalar bo‘ylab aylanadi",
+    "cardMonths": "oy o‘qish",
+    "cardCta": "Kurslarni ko‘rish",
+    "cardClose": "Kasb kartasini yopish",
+    "stats": {
+      "students": "bitiruvchi va talaba",
+      "employed": "ishga joylashgan",
+      "years": "yillik tajriba",
+      "mentors": "amaliyotchi murabbiy"
+    }
+  },
+  "professions": {
+    "frontend": {
+      "name": "Frontend",
+      "desc": "Millionlab odam foydalanadigan interfeyslar: React, TypeScript, Next.js."
+    },
+    "backend": {
+      "name": "Backend",
+      "desc": "Serverlar, API va ma’lumotlar bazalari — har bir mahsulotning miyasi."
+    },
+    "mobile": {
+      "name": "Mobile",
+      "desc": "Foydalanuvchining cho‘ntagida yashaydigan iOS va Android ilovalari."
+    },
+    "uiux": {
+      "name": "UI/UX",
+      "desc": "Bir qarashda tushunarli va foydalanishga qulay dizayn."
+    },
+    "data": {
+      "name": "Data",
+      "desc": "Ma’lumotlar tahlili, SQL, Python va biznes qarorlari uchun dashboardlar."
+    },
+    "ai": {
+      "name": "AI / ML",
+      "desc": "Sohalarni o‘zgartirayotgan neyron tarmoqlar, LLM va aqlli xizmatlar."
+    },
+    "qa": {
+      "name": "QA",
+      "desc": "Qo‘lda va avtomatlashtirilgan testlash — kelishuvsiz sifat."
+    },
+    "devops": {
+      "name": "DevOps",
+      "desc": "CI/CD, konteynerlar va ishdan chiqmaydigan infratuzilma."
+    },
+    "security": {
+      "name": "Kiberxavfsizlik",
+      "desc": "Tizimlarni himoyalash, pentest va insidentlarni tekshirish."
+    },
+    "gamedev": {
+      "name": "GameDev",
+      "desc": "Unity va C# da o‘yinlar yaratish — prototipdan relizgacha."
+    },
+    "pm": {
+      "name": "Product / PM",
+      "desc": "Mahsulot va jamoani g‘oyadan relizgacha boshqarish."
+    },
+    "cloud": {
+      "name": "Cloud",
+      "desc": "AWS’da bulutli arxitektura: masshtab, xavfsizlik va narx."
+    }
+  },
+  "about": {
+    "eyebrow": "Maktab haqida",
+    "title": "IT’ga kirish uchun kerak bo‘lgan hamma narsa.",
+    "subtitle": "O‘qitishni natija atrofida quramiz: haqiqiy loyihalar, jonli murabbiylar va ishga joylashguncha yordam.",
+    "items": [
+      {
+        "title": "Birinchi haftadan amaliyot",
+        "text": "Vaqtning 70% i — kod va loyihalar. Bitirguncha portfolioda 4–6 ta ish bo‘ladi."
+      },
+      {
+        "title": "Soha murabbiylari",
+        "text": "Nazariyotchilar emas, haqiqiy kompaniyalarning dasturchilari va rahbarlari dars beradi."
+      },
+      {
+        "title": "Karyera yordami",
+        "text": "Rezyume, LinkedIn, sinov suhbatlari va hamkorlarga to‘g‘ridan-to‘g‘ri tavsiya."
+      },
+      {
+        "title": "Qulay format",
+        "text": "Onlayn, oflayn yoki aralash — jadvalingizga mosini tanlang. Darslar yozib olinadi."
+      },
+      {
+        "title": "Hamjamiyat",
+        "text": "Yopiq chatlar, hakatonlar va bitiruvchilar uchrashuvlari — siz yolg‘iz emassiz."
+      },
+      {
+        "title": "Doimiy yangilanadigan dastur",
+        "text": "Dasturlar bozor va texnologiyalar bilan birga har chorakda yangilanadi."
+      }
+    ]
+  },
+  "courses": {
+    "eyebrow": "Kurslar",
+    "title": "O‘z yo‘lingizni tanlang.",
+    "subtitle": "Yo‘nalishlarni kasb, daraja va format bo‘yicha saralang — va dasturni ko‘ring.",
+    "filters": {
+      "category": "Yo‘nalish",
+      "level": "Daraja",
+      "format": "Format",
+      "all": "Barchasi"
+    },
+    "levels": {
+      "beginner": "Noldan",
+      "intermediate": "O‘rta",
+      "advanced": "Ilg‘or"
+    },
+    "formats": {
+      "online": "Onlayn",
+      "offline": "Oflayn",
+      "hybrid": "Aralash"
+    },
+    "labels": {
+      "duration": "Davomiyligi",
+      "months": "oy",
+      "perMonth": "oyiga",
+      "program": "Kurs dasturi",
+      "apply": "Kursga yozilish",
+      "details": "Dastur",
+      "hideDetails": "Yig‘ish",
+      "level": "Daraja",
+      "format": "Format"
+    },
+    "empty": "Tanlangan filtrlar bo‘yicha hozircha kurs yo‘q. Filtrlarni tozalang yoki ariza qoldiring — individual tanlab beramiz.",
+    "reset": "Filtrlarni tozalash",
+    "count": "Topilgan kurslar:"
+  },
+  "projects": {
+    "eyebrow": "O‘quvchilar loyihalari",
+    "title": "Biz faxrlanadigan ishlar.",
+    "subtitle": "Talabalar o‘qish davomida yaratgan haqiqiy loyihalar.",
+    "by": "Muallif",
+    "demo": "Demo",
+    "code": "Kod",
+    "empty": "Birinchi loyihalar tez orada shu yerda paydo bo‘ladi."
+  },
+  "reviews": {
+    "eyebrow": "Fikrlar",
+    "title": "Bitiruvchilar nima deydi.",
+    "subtitle": "Noldan boshlagan insonlarning hikoyalari.",
+    "rating": "Baho: 5 dan {rating}",
+    "empty": "Fikrlar tez orada qo‘shiladi."
+  },
+  "contacts": {
+    "eyebrow": "Aloqa",
+    "title": "Keling, tanishamiz.",
+    "subtitle": "Ariza qoldiring — menejer ish kuni ichida bog‘lanadi va kurs tanlashga yordam beradi.",
+    "info": {
+      "phone": "Telefon",
+      "email": "Email",
+      "address": "Manzil",
+      "hours": "Ish vaqti",
+      "social": "Ijtimoiy tarmoqlar"
+    },
+    "form": {
+      "title": "Maslahat uchun ariza",
+      "name": "Ismingiz",
+      "namePlaceholder": "Masalan, Alisher",
+      "contact": "Telefon, email yoki @telegram",
+      "contactPlaceholder": "+998 90 123 45 67",
+      "course": "Qiziqqan yo‘nalish",
+      "courseAny": "Hali bilmayman — maslahat kerak",
+      "message": "Xabar",
+      "messagePlaceholder": "Tajribangiz va maqsadlaringiz haqida yozing (ixtiyoriy)",
+      "submit": "Ariza yuborish",
+      "sending": "Yuborilmoqda…",
+      "consent": "Tugmani bosish orqali siz bog‘lanish uchun aloqa ma’lumotlaringiz qayta ishlanishiga rozilik bildirasiz.",
+      "success": "Rahmat! Ariza yuborildi — tez orada siz bilan bog‘lanamiz.",
+      "successTitle": "Ariza qabul qilindi",
+      "again": "Yana yuborish",
+      "error": "Arizani yuborib bo‘lmadi. Ulanishni tekshirib, qayta urinib ko‘ring.",
+      "tooMany": "Arizalar juda ko‘p. Birozdan so‘ng qayta urinib ko‘ring.",
+      "errors": {
+        "name": "Ismingizni kiriting (kamida 2 belgi).",
+        "contact": "Telefon, email yoki @telegram kiriting."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "IT kasblarini 2019-yildan beri o‘rgatamiz.",
+    "rights": "Barcha huquqlar himoyalangan.",
+    "backToTop": "Yuqoriga"
+  },
+  "chat": {
+    "launcher": "Savol berish",
+    "title": "Maktab yordamchisi",
+    "subtitle": "Kurslar, narxlar, jadval va yozilish",
+    "greeting": "Assalomu alaykum! Men {school} yordamchisiman. Kurs tanlash, narxlar, jadval va yozilish bo‘yicha yordam beraman. Nimani bilmoqchisiz?",
+    "placeholder": "Savolingizni yozing…",
+    "send": "Yuborish",
+    "close": "Chatni yopish",
+    "newChat": "Qaytadan boshlash",
+    "typing": "Yordamchi yozmoqda…",
+    "error": "Javob olib bo‘lmadi. Ulanishni tekshirib, qayta urinib ko‘ring.",
+    "rate": "Xabarlar juda ko‘p. Biroz kutib, qayta urinib ko‘ring.",
+    "disclaimer": "Javoblar maktab ma’lumotlari asosida AI tomonidan tuziladi va noaniqliklar bo‘lishi mumkin. Muhim shartlarni administratordan aniqlang.",
+    "sources": "Manbalar",
+    "suggestionsLabel": "Ko‘p beriladigan savollar",
+    "sourceNames": {
+      "price": "Narxlar",
+      "faq": "Savol-javoblar",
+      "schedule": "Jadval va aloqa"
+    },
+    "suggestions": [
+      "Frontend kursi qancha turadi?",
+      "Bo‘lib to‘lash mumkinmi?",
+      "Sinov darsiga qanday yozilaman?",
+      "Ish vaqti va manzilingiz qanday?"
+    ]
+  }
+}

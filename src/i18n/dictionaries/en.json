@@ -1,0 +1,236 @@
+{
+  "meta": {
+    "title": "Orbit IT School — online and offline IT career training",
+    "description": "IT career school: Frontend, Backend, Mobile, UI/UX, Data, AI, QA, DevOps and more. Hands-on practice, mentors and job placement help."
+  },
+  "nav": {
+    "about": "About",
+    "courses": "Courses",
+    "projects": "Projects",
+    "reviews": "Reviews",
+    "contacts": "Contacts",
+    "enroll": "Enroll",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Site language",
+    "skip": "Skip to content"
+  },
+  "hero": {
+    "eyebrow": "A next-generation IT school",
+    "title": "Pick a profession.",
+    "titleAccent": "We’ll put you in orbit.",
+    "subtitle": "12 career paths, hands-on practice and mentors from the industry. Start from zero and land your first offer.",
+    "ctaPrimary": "Choose a course",
+    "ctaSecondary": "Free consultation",
+    "hint": "Drag the planet or pick a profession in orbit",
+    "planetLabel": "Interactive planet: IT professions orbiting around it",
+    "cardMonths": "months of study",
+    "cardCta": "See courses",
+    "cardClose": "Close profession card",
+    "stats": {
+      "students": "graduates and students",
+      "employed": "employment rate",
+      "years": "years on the market",
+      "mentors": "practising mentors"
+    }
+  },
+  "professions": {
+    "frontend": {
+      "name": "Frontend",
+      "desc": "Interfaces used by millions: React, TypeScript, Next.js."
+    },
+    "backend": {
+      "name": "Backend",
+      "desc": "Servers, APIs and databases — the brain of every product."
+    },
+    "mobile": {
+      "name": "Mobile",
+      "desc": "iOS and Android apps that live in the user’s pocket."
+    },
+    "uiux": {
+      "name": "UI/UX",
+      "desc": "Design that is clear at a glance and a joy to use."
+    },
+    "data": {
+      "name": "Data",
+      "desc": "Data analysis, SQL, Python and dashboards for business decisions."
+    },
+    "ai": {
+      "name": "AI / ML",
+      "desc": "Neural networks, LLMs and smart services reshaping industries."
+    },
+    "qa": {
+      "name": "QA",
+      "desc": "Manual and automated testing — quality without compromise."
+    },
+    "devops": {
+      "name": "DevOps",
+      "desc": "CI/CD, containers and infrastructure that doesn’t fall over."
+    },
+    "security": {
+      "name": "Cybersecurity",
+      "desc": "System defence, pentesting and incident investigation."
+    },
+    "gamedev": {
+      "name": "GameDev",
+      "desc": "Build games with Unity and C#, from prototype to release."
+    },
+    "pm": {
+      "name": "Product / PM",
+      "desc": "Lead a product and a team from idea to release."
+    },
+    "cloud": {
+      "name": "Cloud",
+      "desc": "Cloud architecture on AWS: scale, security and cost."
+    }
+  },
+  "about": {
+    "eyebrow": "About the school",
+    "title": "Everything you need to get into IT.",
+    "subtitle": "Our training is built around outcomes: real projects, live mentors and support all the way to employment.",
+    "items": [
+      {
+        "title": "Practice from week one",
+        "text": "70% of the time is code and projects. You graduate with 4–6 portfolio pieces."
+      },
+      {
+        "title": "Mentors from the industry",
+        "text": "Taught by developers and leads from real companies, not theorists."
+      },
+      {
+        "title": "Career support",
+        "text": "CV, LinkedIn, mock interviews and direct referrals to partner companies."
+      },
+      {
+        "title": "Flexible format",
+        "text": "Online, offline or hybrid — pick what fits your schedule. Lessons are recorded."
+      },
+      {
+        "title": "Community",
+        "text": "Private chats, hackathons and alumni meetups — you are never on your own."
+      },
+      {
+        "title": "Always up to date",
+        "text": "Programmes are refreshed every quarter alongside the market and technology."
+      }
+    ]
+  },
+  "courses": {
+    "eyebrow": "Courses",
+    "title": "Choose your trajectory.",
+    "subtitle": "Filter paths by profession, level and format — then explore the programme.",
+    "filters": {
+      "category": "Path",
+      "level": "Level",
+      "format": "Format",
+      "all": "All"
+    },
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "formats": {
+      "online": "Online",
+      "offline": "Offline",
+      "hybrid": "Hybrid"
+    },
+    "labels": {
+      "duration": "Duration",
+      "months": "mo.",
+      "perMonth": "per month",
+      "program": "Course programme",
+      "apply": "Enroll in this course",
+      "details": "Programme",
+      "hideDetails": "Collapse",
+      "level": "Level",
+      "format": "Format"
+    },
+    "empty": "No courses match these filters yet. Reset the filters or send a request — we’ll find the right fit.",
+    "reset": "Reset filters",
+    "count": "Courses found:"
+  },
+  "projects": {
+    "eyebrow": "Student projects",
+    "title": "Work we’re proud of.",
+    "subtitle": "Real projects our students built during their studies.",
+    "by": "By",
+    "demo": "Demo",
+    "code": "Code",
+    "empty": "The first projects will appear here soon."
+  },
+  "reviews": {
+    "eyebrow": "Reviews",
+    "title": "What graduates say.",
+    "subtitle": "Stories from people who started from zero.",
+    "rating": "Rated {rating} out of 5",
+    "empty": "Reviews are coming soon."
+  },
+  "contacts": {
+    "eyebrow": "Contacts",
+    "title": "Let’s get to know each other.",
+    "subtitle": "Send a request and a manager will reach out within one business day to help you choose a course.",
+    "info": {
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "hours": "Opening hours",
+      "social": "Find us online"
+    },
+    "form": {
+      "title": "Request a consultation",
+      "name": "Your name",
+      "namePlaceholder": "e.g. Alex",
+      "contact": "Phone, email or @telegram",
+      "contactPlaceholder": "+998 90 123 45 67",
+      "course": "Path you’re interested in",
+      "courseAny": "Not sure yet — I need advice",
+      "message": "Message",
+      "messagePlaceholder": "Tell us about your background and goals (optional)",
+      "submit": "Send request",
+      "sending": "Sending…",
+      "consent": "By submitting, you agree to us processing your contact details to get in touch with you.",
+      "success": "Thank you! Your request has been sent — we’ll be in touch soon.",
+      "successTitle": "Request received",
+      "again": "Send another",
+      "error": "We couldn’t send your request. Check your connection and try again.",
+      "tooMany": "Too many requests. Please try again a bit later.",
+      "errors": {
+        "name": "Enter your name (at least 2 characters).",
+        "contact": "Enter a phone number, email or @telegram."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Teaching IT professions since 2019.",
+    "rights": "All rights reserved.",
+    "backToTop": "Back to top"
+  },
+  "chat": {
+    "launcher": "Ask a question",
+    "title": "School assistant",
+    "subtitle": "Courses, prices, schedule and enrolment",
+    "greeting": "Hello! I'm the assistant of {school}. I can help you choose a course and answer questions about prices, schedule and enrolment. What would you like to know?",
+    "placeholder": "Type your question…",
+    "send": "Send",
+    "close": "Close chat",
+    "newChat": "Start over",
+    "typing": "The assistant is typing…",
+    "error": "Couldn't get an answer. Check your connection and try again.",
+    "rate": "Too many messages. Please wait a little and try again.",
+    "disclaimer": "Answers are generated by AI from the school's data and may be inaccurate. Please confirm important terms with the administrator.",
+    "sources": "Sources",
+    "suggestionsLabel": "Frequently asked questions",
+    "sourceNames": {
+      "price": "Price list",
+      "faq": "FAQ",
+      "schedule": "Schedule and contacts"
+    },
+    "suggestions": [
+      "How much is the Frontend course?",
+      "Do you offer installments?",
+      "How do I sign up for a trial lesson?",
+      "What are your hours and address?"
+    ]
+  }
+}

@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Orbit IT School — сайт IT-школы
 
-## Getting Started
+Многоязычный (RU / EN / UZ) сайт IT-школы с интерактивной планетой в hero-блоке, каталогом курсов,
+проектами и отзывами учеников, формой обратной связи и админ-панелью.
 
-First, run the development server:
+**Стек:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · three.js · motion · SQLite (`node:sqlite`) ·
+zod · jose (JWT) · bcryptjs · Vitest
+
+## Быстрый старт
+
+Нужен **Node.js 24+** (используется встроенный `node:sqlite`).
 
 ```bash
+npm install
+cp .env.example .env.local   # затем задайте ADMIN_PASSWORD (≥ 12 символов) и SESSION_SECRET (≥ 32)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Сайт: <http://localhost:3000> (редирект на язык по `Accept-Language`, по умолчанию `/ru`)
+- Админ-панель: <http://localhost:3000/admin>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+База данных (`data/school.db`) создаётся и заполняется демо-данными при первом запуске. Первый админ
+создаётся из `ADMIN_USER` / `ADMIN_PASSWORD`, пока таблица `admins` пуста. Пароль после этого хранится
+только как bcrypt-хеш; чтобы сменить его, удалите строку из таблицы `admins` и перезапустите сервер.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Переменная       | Назначение                                                                 |
+| ---------------- | -------------------------------------------------------------------------- |
+| `ADMIN_USER`     | логин первого администратора                                               |
+| `ADMIN_PASSWORD` | пароль первого администратора (**обязательно** в production)               |
+| `SESSION_SECRET` | случайная строка ≥ 32 символов для подписи cookie сессии (**обязательно**) |
+| `DATABASE_FILE`  | необязательно: путь к файлу SQLite (по умолчанию `data/school.db`)         |
+| `GEMINI_API_KEY` | ключ Gemini API для ИИ-ассистента (без него чат отвечает фрагментами из базы знаний) |
+| `GEMINI_MODEL`   | необязательно: модель ассистента (по умолчанию `gemini-3.5-flash-lite`)    |
+| `TRUST_PROXY`    | `true` только за reverse proxy (nginx, Caddy…): тогда для лимитов берётся последний адрес из `X-Forwarded-For`. Иначе заголовок игнорируется |
 
-## Learn More
+## Скрипты
 
-To learn more about Next.js, take a look at the following resources:
+| Команда              | Что делает                         |
+| -------------------- | ---------------------------------- |
+| `npm run dev`        | dev-сервер                         |
+| `npm run build`      | production-сборка                  |
+| `npm start`          | запуск собранного приложения       |
+| `npm test`           | unit- и API-тесты (Vitest)         |
+| `npm run typecheck`  | проверка типов                     |
+| `npm run lint`       | ESLint                             |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Что внутри
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Hero-планета** (`src/components/hero/Planet.tsx`) — three.js: шейдерная «точечная» планета, атмосфера,
+  3 орбиты и 12 IT-профессий в виде настоящих `<button>` (доступны с клавиатуры), которые проецируются из
+  3D. Перетаскивание вращает систему, клик по профессии показывает карточку о школе и фильтрует курсы.
+  Рендер ставится на паузу вне экрана, учитывается `prefers-reduced-motion`, есть fallback без WebGL.
+- **Блоки:** О школе → Обучение (фильтры по направлению / уровню / формату, программа курса) → Проекты
+  учеников → Отзывы → Контакты и форма заявки.
+- **Мультиязычность:** маршруты `/ru`, `/en`, `/uz`; тексты интерфейса — `src/i18n/dictionaries/*.json`
+  (тест следит, чтобы ключи во всех языках совпадали); контент из БД хранится в колонках `*_ru/_en/_uz`
+  с fallback на русский.
+- **Админ-панель:** дашборд, заявки (статусы, экспорт CSV), курсы, проекты, отзывы (модерация),
+  настройки (контакты, адрес, цифры на сайте). Контент редактируется на трёх языках во вкладках.
+  Поля ресурсов описаны один раз в `src/lib/resources.ts` — из него строятся SQL, валидация и формы.
 
-## Deploy on Vercel
+## ИИ-ассистент (RAG + Gemini)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Виджет чата в правом нижнем углу отвечает на вопросы о курсах, ценах, графике и записи на RU / EN / UZ.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+вопрос → гибридный поиск (BM25 + эмбеддинги Gemini, RRF) → фрагменты из rag-data/ → gemini-3.5-flash-lite
+                                                                    ↳ инструменты: search_knowledge_base, request_callback
+```
+
+- **База знаний** — три файла в `rag-data/` (прайс, FAQ, график и контакты). Правьте их как обычный
+  Markdown: индекс пересобирается сам при изменении файлов, эмбеддинги кэшируются в `data/rag-embeddings.json`
+  и пересчитываются только для изменённых фрагментов. Каждый `###`-блок (курс, вопрос, преподаватель)
+  становится отдельным фрагментом, поэтому держите блоки самодостаточными.
+- **Агент** (`src/lib/rag/agent.ts`) — модель отвечает только по найденным фрагментам, может сама
+  уточнить поиск (`search_knowledge_base`, запрос по-русски) и оставить заявку (`request_callback`).
+  Заявка создаётся, только если контакт действительно написал посетитель, проходит ту же валидацию и
+  лимит, что и форма на сайте.
+- **Деградация:** нет ключа, ошибка API, таймаут или отказ от tools → ответ собирается из лучшего
+  найденного фрагмента с телефоном школы. Нет эмбеддингов → работает только BM25.
+- **Безопасность:** ключ только на сервере (заголовок `x-goog-api-key`), лимиты 20 сообщений / 10 мин
+  на клиента и общий лимит, тексты базы знаний и сообщения посетителей в промпте помечены как данные.
+- Проверка без ключа: `npm test` (мокированный Gemini). С ключом: добавьте `GEMINI_API_KEY` в `.env.local`
+  и перезапустите сервер.
+
+## Дизайн (Apple HIG)
+
+Дизайн сверен со скиллом [`apple-design`](https://github.com/dickwu/apple-design-skill)
+(установлен в `.claude/skills/apple-design`): семантические цвета с light/dark вариантами и посчитанным
+контрастом (комментарий в `src/app/globals.css`), текст 17px, цели нажатия ≥ 44px, стекло (Liquid Glass)
+только на слое навигации и контролов, контент — на непрозрачных поверхностях, уважение к
+`prefers-reduced-motion`, `prefers-reduced-transparency` и `prefers-contrast`.
+
+## Безопасность
+
+- Сессия админа — подписанный JWT (HS256) в `httpOnly` + `SameSite=Lax` cookie; проверяется в `proxy.ts`
+  и повторно в каждом route handler.
+- Все запросы к БД параметризованы; имена таблиц и колонок берутся только из статической конфигурации.
+- Ввод валидируется zod на сервере; форма заявки защищена honeypot-полем и ограничением частоты.
+- Вход: bcrypt, одинаковое время ответа для неизвестного логина, лимит попыток по IP.
+- Ссылки на проекты и соцсети принимаются только со схемой `http(s)://`; CSV-экспорт нейтрализует формулы.
+- Лимиты на вход: по IP, по логину и общий (bcrypt дорогой по CPU). Без `TRUST_PROXY=true` все клиенты делят одну корзину IP.
+- Заголовки: CSP, HSTS (production), `X-Frame-Options`, `Permissions-Policy`; тела запросов ограничены 32 КБ.
+- Лимитер хранится в памяти процесса — для нескольких инстансов замените его общим хранилищем (Redis).
+
+## Деплой
+
+`node:sqlite` пишет в локальный файл, поэтому нужен хостинг с постоянным диском (VPS, Docker volume,
+Fly.io, Railway). На serverless-платформах с эфемерной файловой системой данные не сохранятся — там
+используйте внешнюю БД.
